@@ -5,9 +5,12 @@ nixPkgs = ["php82", "php82Packages.composer"]
 cmds = ["composer install --no-dev --optimize-autoloader"]
 
 [phases.build]
-cmds = ["mkdir -p database"]
+cmds = [
+  "mkdir -p database",
+  "mkdir -p public/images/posts",
+  "chmod -R 755 database",
+  "chmod -R 755 public/images"
+]
 
 [start]
-cmd = "php -S 0.0.0.0:$PORT -t public"
-
-
+cmd = "php -S 0.0.0.0:$PORT -t Layrid-Clone"

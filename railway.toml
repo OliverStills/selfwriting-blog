@@ -1,9 +1,10 @@
 [build]
-builder = "nixpacks"
-buildCommand = "composer install --no-dev --optimize-autoloader"
+builder = "NIXPACKS"
+watchPatterns = ["**/*.php", "**/*.css", "**/*.js"]
 
 [deploy]
-startCommand = "php -S 0.0.0.0:$PORT -t public"
-restartPolicyType = "always"
-
-
+startCommand = "php -S 0.0.0.0:$PORT -t Layrid-Clone"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

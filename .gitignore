@@ -1,5 +1,6 @@
 # Environment variables
 .env
+src/config.local.php
 
 # Database
 database/blog.db
