@@ -1,0 +1,298 @@
+/* 
+ * Mobile-First Design inspired by Visualize Value
+ * Clean, minimal, typography-focused
+ */
+
+/* CSS Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-text: #000000;
+    --color-text-light: #666666;
+    --color-background: #ffffff;
+    --color-border: #e5e5e5;
+    --color-link: #000000;
+    --color-link-hover: #666666;
+    --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --max-width: 680px;
+    --spacing-base: 1rem;
+}
+
+body {
+    font-family: var(--font-system);
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header */
+.site-header {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 3rem;
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.site-title a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.site-description {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+}
+
+/* Post Feed */
+.post-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.post-card {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 3rem;
+}
+
+.post-card:last-child {
+    border-bottom: none;
+}
+
+.post-date {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.post-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+.post-title a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-title a:hover {
+    color: var(--color-text-light);
+}
+
+.post-excerpt {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin-bottom: 1rem;
+}
+
+.read-more {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-text);
+    padding-bottom: 2px;
+    transition: opacity 0.2s ease;
+    display: inline-block;
+}
+
+.read-more:hover {
+    opacity: 0.6;
+}
+
+/* Single Post */
+.post-single {
+    padding-bottom: 3rem;
+}
+
+.post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.post-header .post-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.post-content {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Book Recommendations */
+.book-recommendations {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 2px solid var(--color-border);
+}
+
+.book-recommendations h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.book-recommendations-intro {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    margin-bottom: 2rem;
+}
+
+.books-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.book-item {
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+}
+
+.book-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.book-author {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.75rem;
+}
+
+.book-relevance {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.book-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    text-decoration: none;
+    border: 1px solid var(--color-text);
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.book-link:hover {
+    background-color: var(--color-text);
+    color: var(--color-background);
+}
+
+/* Back Link */
+.back-link {
+    display: inline-block;
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--color-text);
+}
+
+/* Footer */
+.site-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    text-align: center;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 0;
+    color: var(--color-text-light);
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+/* Tablet & Desktop */
+@media (min-width: 768px) {
+    .container {
+        padding: 3rem 2rem;
+    }
+
+    .site-header {
+        padding: 4rem 0 3rem;
+    }
+
+    .site-title {
+        font-size: 2rem;
+    }
+
+    .post-title {
+        font-size: 2.25rem;
+    }
+
+    .post-header .post-title {
+        font-size: 2.75rem;
+    }
+
+    .post-content {
+        font-size: 1.125rem;
+        line-height: 1.9;
+    }
+
+    .books-list {
+        gap: 2.5rem;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1024px) {
+    .post-header .post-title {
+        font-size: 3rem;
+    }
+}
+
+
