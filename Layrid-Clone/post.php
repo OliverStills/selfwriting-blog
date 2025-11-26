@@ -1,5 +1,17 @@
 <?php
 
+// Handle non-www to www redirect
+$host = $_SERVER['HTTP_HOST'] ?? '';
+$uri = $_SERVER['REQUEST_URI'] ?? '/';
+
+// If accessing without www and not localhost, redirect to www
+if (!str_starts_with($host, 'www.') && !str_contains($host, 'localhost') && !str_contains($host, '127.0.0.1') && !str_contains($host, 'railway.app')) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $redirectUrl = $protocol . '://www.' . $host . $uri;
+    header('Location: ' . $redirectUrl, true, 301);
+    exit;
+}
+
 require_once __DIR__ . '/../src/config.php';
 
 use App\Database;
