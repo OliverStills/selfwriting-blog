@@ -9,13 +9,13 @@ class ImageGenerator
 {
     private Client $httpClient;
     private string $apiKey;
-    private string $apiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:generate';
+    private string $apiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent';
 
     public function __construct()
     {
-        $this->apiKey = $_ENV['NANO_BANANA_API_KEY'] ?? '';
+        $this->apiKey = NANO_BANANA_API_KEY ?? '';
         $this->httpClient = new Client([
-            'timeout' => 30,
+            'timeout' => 60,
             'headers' => [
                 'Content-Type' => 'application/json',
             ]
@@ -118,31 +118,49 @@ PROMPT;
     private function callNanoBananaAPI(string $prompt): ?string
     {
         try {
+            // Use Gemini's generateContent format as per official documentation
             $response = $this->httpClient->post($this->apiEndpoint, [
                 'query' => [
                     'key' => $this->apiKey
                 ],
                 'json' => [
-                    'prompt' => $prompt,
-                    'number_of_images' => 1,
-                    'aspect_ratio' => '16:9', // Widescreen for hero images
-                    'negative_prompt' => 'text, watermark, signature, low quality, blurry, amateur',
-                    'person_generation' => 'allow_adult'
+                    'contents' => [
+                        [
+                            'parts' => [
+                                ['text' => $prompt]
+                            ]
+                        ]
+                    ],
+                    'generationConfig' => [
+                        'responseModalities' => ['IMAGE']
+                    ]
                 ]
             ]);
 
             $body = json_decode($response->getBody()->getContents(), true);
             
-            // Extract image data from response
-            if (isset($body['images'][0]['image'])) {
-                return $body['images'][0]['image']; // Base64 encoded image
+            // Extract image data from Gemini response format
+            // Response format: candidates[0].content.parts[].inlineData.data
+            if (isset($body['candidates'][0]['content']['parts'])) {
+                foreach ($body['candidates'][0]['content']['parts'] as $part) {
+                    if (isset($part['inlineData']['data'])) {
+                        return $part['inlineData']['data']; // Base64 encoded image
+                    }
+                }
             }
             
             error_log('Unexpected API response format: ' . json_encode($body));
             return null;
             
         } catch (GuzzleException $e) {
-            error_log('Nano Banana API request failed: ' . $e->getMessage());
+            error_log('Nano Banana (Gemini) API request failed: ' . $e->getMessage());
+            
+            // Try to get more details from response
+            if (method_exists($e, 'getResponse') && $e->getResponse()) {
+                $errorBody = $e->getResponse()->getBody()->getContents();
+                error_log('API Error Response: ' . $errorBody);
+            }
+            
             throw new \RuntimeException('Image generation failed: ' . $e->getMessage());
         }
     }
@@ -178,7 +196,7 @@ PROMPT;
         // Add timestamp for uniqueness
         $filename .= '-' . time();
         
-        return $filename . '.jpg';
+        return $filename . '.png';
     }
 
     /**
@@ -190,4 +208,6 @@ PROMPT;
         return 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80';
     }
 }
+
+
 

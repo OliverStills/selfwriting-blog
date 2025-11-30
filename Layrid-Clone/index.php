@@ -97,7 +97,7 @@ function getPostCategory($title) {
             <!-- STILL Phase Card -->
             <section class="sticky-card phase-card" id="card-still">
                 <div class="card-bg">
-                    <img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80" alt="STILL Phase">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80&fit=crop&crop=center" alt="STILL Phase - Mental Clarity">
                 </div>
                 <div class="card-content">
                     <span class="phase-label">Phase 01</span>

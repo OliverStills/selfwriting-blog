@@ -37,3 +37,5 @@ echo "\n";
 echo "API Key configured successfully!\n";
 echo "You can now generate AI images for your blog posts.\n";
 
+
+

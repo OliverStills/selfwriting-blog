@@ -93,7 +93,7 @@ class Database
     public function getAllPosts(int $limit = 50, bool $includeContent = false): array
     {
         $pdo = self::getInstance($this->dbPath);
-        $fields = $includeContent ? 'id, title, content, excerpt, created_at' : 'id, title, excerpt, created_at';
+        $fields = $includeContent ? 'id, title, content, excerpt, created_at, image_url' : 'id, title, excerpt, created_at, image_url';
         $stmt = $pdo->prepare("
             SELECT {$fields}
             FROM posts 
@@ -126,10 +126,10 @@ class Database
     {
         $pdo = self::getInstance($this->dbPath);
         $stmt = $pdo->prepare('
-            INSERT INTO posts (title, content, excerpt, image_url, created_at, published) 
-            VALUES (?, ?, ?, ?, datetime("now"), 1)
+            INSERT INTO posts (title, content, excerpt, created_at, published) 
+            VALUES (?, ?, ?, datetime("now"), 1)
         ');
-        $stmt->execute([$title, $content, $excerpt, $imageUrl]);
+        $stmt->execute([$title, $content, $excerpt]);
         return (int)$pdo->lastInsertId();
     }
 
@@ -140,14 +140,33 @@ class Database
         $stmt->execute([$imageUrl, $postId]);
     }
 
-    public function createBook(int $postId, string $title, string $author, string $amazonLink, string $relevanceNote): void
+    public function createBook(int $postId, string $title, string $author, string $relevanceNote, string $amazonLink, string $type = 'BOOK'): void
     {
         $pdo = self::getInstance($this->dbPath);
-        $stmt = $pdo->prepare('
-            INSERT INTO books (post_id, title, author, amazon_link, relevance_note) 
-            VALUES (?, ?, ?, ?, ?)
-        ');
-        $stmt->execute([$postId, $title, $author, $amazonLink, $relevanceNote]);
+        
+        // Check if type column exists
+        $columns = $pdo->query("PRAGMA table_info(books)")->fetchAll(\PDO::FETCH_ASSOC);
+        $hasType = false;
+        foreach ($columns as $col) {
+            if ($col['name'] === 'type') {
+                $hasType = true;
+                break;
+            }
+        }
+        
+        if ($hasType) {
+            $stmt = $pdo->prepare('
+                INSERT INTO books (post_id, title, author, relevance_note, amazon_link, type) 
+                VALUES (?, ?, ?, ?, ?, ?)
+            ');
+            $stmt->execute([$postId, $title, $author, $relevanceNote, $amazonLink, $type]);
+        } else {
+            $stmt = $pdo->prepare('
+                INSERT INTO books (post_id, title, author, relevance_note, amazon_link) 
+                VALUES (?, ?, ?, ?, ?)
+            ');
+            $stmt->execute([$postId, $title, $author, $relevanceNote, $amazonLink]);
+        }
     }
 
     public function deleteBooksByPostId(int $postId): void
