@@ -87,3 +87,4 @@ if ($result['success'] && !empty($result['products'])) {
     echo "❌ Failed: " . ($result['error'] ?? 'Unknown error') . "\n\n";
 }
 
+

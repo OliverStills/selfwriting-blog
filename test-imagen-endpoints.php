@@ -81,3 +81,4 @@ echo "  1. Nano Banana's actual API documentation\n";
 echo "  2. The service URL they provide\n";
 echo "  3. Any setup instructions they gave with the API key\n\n";
 
+

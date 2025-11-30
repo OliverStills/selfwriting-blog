@@ -126,3 +126,4 @@ echo "  1. If the key works with Gemini - the key is valid\n";
 echo "  2. If no image models found - key doesn't have Imagen access\n";
 echo "  3. If image models found - we'll use the correct endpoint!\n\n";
 
+

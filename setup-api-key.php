@@ -39,3 +39,4 @@ echo "You can now generate AI images for your blog posts.\n";
 
 
 
+

@@ -163,3 +163,4 @@ echo "  ASCEND: {$phaseCounters['ASCEND']} posts\n\n";
 
 echo "View your posts at: http://localhost:8001/\n\n";
 
+
